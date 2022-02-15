@@ -1,6 +1,9 @@
 import io
+import os.path
+import random
 import tkinter as tk
 import urllib.request
+from tkinter import messagebox
 from tkinter.ttk import *
 
 from PIL import ImageTk
@@ -48,9 +51,14 @@ class App(tk.Tk):
         self.saveBtn.configure(state=tk.NORMAL)
 
     def save(self):
-        f = open("head.png", "a")
+        filename = "head"
+        if os.path.exists(filename + ".png"):
+            rand = str(random.random())
+            filename = filename + rand[2:5] + ".png"
+        f = open(filename, "a")
         f.close()
-        self.image.save("head.png")
+        self.image.save(filename)
+        messagebox.showinfo("Tout s'est bien passé", "L'image a bien été enregistré sous le nom de : " + filename)
 
 
 if __name__ == "__main__":
