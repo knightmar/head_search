@@ -26,14 +26,17 @@ class App(tk.Tk):
         # Variables
         self.pseudo = ""
         self.head = None
-        self.radioVar = tk.IntVar()
+        self.radioVar = tk.IntVar(value=1)
+        self.iconbitmap("icon.ico")
 
         self.root = Frame(self).grid(padx=100, pady=10)
 
         self.resizable(0, 0)
 
         # champ pseudo
-        self.entry = Entry(self.root, text="Pseudo")
+        self.pseudo_label = Label(self.root, text="Pseudo :").grid()
+
+        self.entry = Entry(self.root)
         self.entry.grid(pady=(10, 10))
 
         # champs radio buttons
@@ -81,14 +84,16 @@ class App(tk.Tk):
     # fnc qui permet de sav l'image dans un fichier
     def save(self):
         filename = "skin"
-        if os.path.exists(filename + ".png"):
-            rand = str(random.random())
-            filename = filename + rand[2:5] + ".png"
+        if not os.path.exists("./sortie_images"):
+            os.mkdir("./sortie_images")
+        if os.path.exists("./sortie_images/" + filename + ".png"):
+            nb = str(random.random())
+            filename = filename + nb[2:5] + ".png"
         else:
             filename = filename + ".png"
-        f = open(filename, "a")
+        f = open("./sortie_images/" + filename, "a")
         f.close()
-        self.image.save(filename)
+        self.image.save("./sortie_images/" + filename)
         messagebox.showinfo("Tout s'est bien passé", "L'image a bien été enregistré sous le nom de : " + filename)
 
     # fnc appellé pour récup les radios buttons
