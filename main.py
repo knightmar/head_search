@@ -27,17 +27,20 @@ class App(tk.Tk):
         self.pseudo = ""
         self.head = None
         self.radioVar = tk.IntVar(value=1)
-        self.iconbitmap("icon.ico")
+        self.iconbitmap("./img/icon.ico")
+        self.wm_title("Head Searcher")
 
         self.root = Frame(self).grid(padx=100, pady=10)
 
         self.resizable(0, 0)
 
+        self.title_label = Label(self.root, text="Head Searcher").grid()
+
         # champ pseudo
         self.pseudo_label = Label(self.root, text="Pseudo :").grid()
 
         self.entry = Entry(self.root)
-        self.entry.grid(pady=(10, 10))
+        self.entry.grid(pady=(1, 10))
 
         # champs radio buttons
         self.tete = Radiobutton(self.root, text="Tête", variable=self.radioVar, value=1)
@@ -67,15 +70,16 @@ class App(tk.Tk):
         self.saveBtn.configure(state=tk.DISABLED)
 
         # label image
-        fond = tk.PhotoImage(file='fond.png')
+        fond = tk.PhotoImage(file='./img/fond.png')
         self.imagelab = tk.Label(self, image=fond)
         self.imagelab.grid(pady=(0, 10))
+
+        self.rights_label = Label(self.root, text="knightmar - All rights reserved").grid()
 
     # fnc appellée au clic du bouton confirm
     def confirm(self):
         self.pseudo = self.entry.get()
         self.url = "https://minotar.net/" + str(self.radio()) + "/" + self.pseudo
-        print(self.url)
         self.image = WebImage(self.url).get()
         self.head = ImageTk.PhotoImage(self.image)
         self.imagelab.configure(image=self.head)
