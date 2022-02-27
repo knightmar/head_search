@@ -5,6 +5,7 @@ import tkinter as tk
 import urllib.request
 from tkinter import messagebox
 from tkinter.ttk import *
+import subprocess
 
 from PIL import ImageTk
 from PIL import Image
@@ -18,6 +19,7 @@ class WebImage:
 
     def get(self):
         return self.image
+
 
 
 class App(tk.Tk):
@@ -34,10 +36,10 @@ class App(tk.Tk):
 
         self.resizable(0, 0)
 
-        self.title_label = Label(self.root, text="Head Searcher").grid()
+        Label(self.root, text="Head Searcher").grid()
 
         # champ pseudo
-        self.pseudo_label = Label(self.root, text="Pseudo :").grid()
+        Label(self.root, text="Pseudo :").grid()
 
         self.entry = Entry(self.root)
         self.entry.grid(pady=(1, 10))
@@ -69,12 +71,15 @@ class App(tk.Tk):
         self.saveBtn.grid(pady=(10, 10))
         self.saveBtn.configure(state=tk.DISABLED)
 
+        self.openBtn = Button(self.root, text="Ouvrir le dossier des images", command=self.showImg)
+        self.openBtn.grid()
+
         # label image
         fond = tk.PhotoImage(file='./img/fond.png')
         self.imagelab = tk.Label(self, image=fond)
         self.imagelab.grid(pady=(0, 10))
 
-        self.rights_label = Label(self.root, text="knightmar - All rights reserved").grid()
+        Label(self.root, text="knightmar - All rights reserved").grid()
 
     # fnc appellée au clic du bouton confirm
     def confirm(self):
@@ -114,6 +119,10 @@ class App(tk.Tk):
             return "bust"
         if self.radioVar.get() == 6:
             return "skin"
+
+    def showImg(self):
+        print("show")
+        subprocess.Popen(r'explorer /open,".\sortie_images"')
 
 
 if __name__ == "__main__":
