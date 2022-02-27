@@ -126,5 +126,8 @@ class App(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+    if os.path.exists("./img"):
+        app = App()
+        app.mainloop()
+    else:
+        messagebox.showerror("Dossier requis non trouvé", "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
