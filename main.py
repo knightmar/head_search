@@ -92,7 +92,7 @@ class App(tk.Tk):
 
     # fnc qui permet de sav l'image dans un fichier
     def save(self):
-        filename = "skin"
+        filename = self.pseudo +" - "+ self.radio()
         if not os.path.exists("./sortie_images"):
             os.mkdir("./sortie_images")
         if os.path.exists("./sortie_images/" + filename + ".png"):
