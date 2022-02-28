@@ -1,7 +1,6 @@
 import io
 import os.path
 import random
-import sys
 import tkinter as tk
 import urllib.request
 from tkinter import messagebox
@@ -10,15 +9,6 @@ import subprocess
 
 from PIL import ImageTk
 from PIL import Image
-
-
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
 
 
 class WebImage:
@@ -31,6 +21,7 @@ class WebImage:
         return self.image
 
 
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -38,7 +29,7 @@ class App(tk.Tk):
         self.pseudo = ""
         self.head = None
         self.radioVar = tk.IntVar(value=1)
-        self.iconbitmap(resource_path("icon.ico"))
+        self.iconbitmap("./img/icon.ico")
         self.wm_title("Head Searcher")
 
         self.root = Frame(self).grid(padx=100, pady=10)
@@ -84,7 +75,7 @@ class App(tk.Tk):
         self.openBtn.grid()
 
         # label image
-        fond = tk.PhotoImage(file=resource_path("fond.png"))
+        fond = tk.PhotoImage(file='./img/fond.png')
         self.imagelab = tk.Label(self, image=fond)
         self.imagelab.grid(pady=(0, 10))
 
@@ -101,7 +92,7 @@ class App(tk.Tk):
 
     # fnc qui permet de sav l'image dans un fichier
     def save(self):
-        filename = self.pseudo + " - " + self.radio()
+        filename = self.pseudo +" - "+ self.radio()
         if not os.path.exists("./sortie_images"):
             os.mkdir("./sortie_images")
         if os.path.exists("./sortie_images/" + filename + ".png"):
@@ -130,14 +121,12 @@ class App(tk.Tk):
             return "skin"
 
     def showImg(self):
-        print("show")
         subprocess.Popen(r'explorer /open,".\sortie_images"')
 
 
 if __name__ == "__main__":
-    #if os.path.exists("./img"):
+    if os.path.exists("./img"):
         app = App()
         app.mainloop()
-    #else:
-     #   messagebox.showerror("Dossier requis non trouvé",
-     #                        "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
+    else:
+        messagebox.showerror("Dossier requis non trouvé", "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
