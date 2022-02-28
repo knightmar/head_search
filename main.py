@@ -121,6 +121,7 @@ class App(tk.Tk):
             return "skin"
 
     def showImg(self):
+        print("show")
         subprocess.Popen(r'explorer /open,".\sortie_images"')
 
 
