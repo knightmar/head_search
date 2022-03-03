@@ -11,6 +11,14 @@ from PIL import ImageTk
 from PIL import Image
 
 
+def connect():
+    try:
+        urllib.request.urlopen('https://minotar.net/')  # Python 3.x
+        return True
+    except:
+        return False
+
+
 class WebImage:
     def __init__(self, url):
         with urllib.request.urlopen(url) as u:
@@ -19,7 +27,6 @@ class WebImage:
 
     def get(self):
         return self.image
-
 
 
 class App(tk.Tk):
@@ -92,7 +99,7 @@ class App(tk.Tk):
 
     # fnc qui permet de sav l'image dans un fichier
     def save(self):
-        filename = self.pseudo +" - "+ self.radio()
+        filename = self.pseudo + " - " + self.radio()
         if not os.path.exists("./sortie_images"):
             os.mkdir("./sortie_images")
         if os.path.exists("./sortie_images/" + filename + ".png"):
@@ -126,7 +133,13 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     if os.path.exists("./img"):
-        app = App()
-        app.mainloop()
+        if connect():
+            app = App()
+            app.mainloop()
+        else:
+            messagebox.showerror("Serveur non trouvé",
+                                 "votre connexion ne vous permets pas d'utiliser cette application, demandez a un adminstrateur réseau, ou utilisez un VPN.")
+
     else:
-        messagebox.showerror("Dossier requis non trouvé", "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
+        messagebox.showerror("Dossier requis non trouvé",
+                             "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
