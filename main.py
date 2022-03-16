@@ -1,6 +1,7 @@
 import io
 import os.path
 import random
+import sys
 import tkinter as tk
 import urllib.request
 from tkinter import messagebox
@@ -10,7 +11,15 @@ import subprocess
 from PIL import ImageTk
 from PIL import Image
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
 
+    return os.path.join(base_path, relative_path)
 def connect():
     try:
         urllib.request.urlopen('https://minotar.net/')  # Python 3.x
@@ -36,7 +45,7 @@ class App(tk.Tk):
         self.pseudo = ""
         self.head = None
         self.radioVar = tk.IntVar(value=1)
-        self.iconbitmap("./img/icon.ico")
+        self.iconbitmap(resource_path("./img/icon.ico"))
         self.wm_title("Head Searcher")
 
         self.root = Frame(self).grid(padx=100, pady=10)
@@ -82,7 +91,7 @@ class App(tk.Tk):
         self.openBtn.grid()
 
         # label image
-        fond = tk.PhotoImage(file='./img/fond.png')
+        fond = tk.PhotoImage(file=resource_path("./img/fond.png"))
         self.imagelab = tk.Label(self, image=fond)
         self.imagelab.grid(pady=(0, 10))
 
@@ -132,7 +141,7 @@ class App(tk.Tk):
 
 
 if __name__ == "__main__":
-    if os.path.exists("./img"):
+    #if os.path.exists("./img"):
         if connect():
             app = App()
             app.mainloop()
@@ -140,6 +149,6 @@ if __name__ == "__main__":
             messagebox.showerror("Serveur non trouvé",
                                  "votre connexion ne vous permets pas d'utiliser cette application, demandez a un adminstrateur réseau, ou utilisez un VPN.")
 
-    else:
-        messagebox.showerror("Dossier requis non trouvé",
-                             "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
+    #else:
+       # messagebox.showerror("Dossier requis non trouvé",
+        #                     "Un dossier nécéssaire au bon fonctionnement du logiciel (img) n'a pas été trouvé.\nVeuillez ne pas le séparer de cet éxecutable")
